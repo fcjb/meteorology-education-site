@@ -46,6 +46,109 @@
             .carousel-item.active {
                 display: block;
             }
+            /* 翻页书样式 */
+            .book-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.85);
+                z-index: 9999;
+                overflow-y: auto;
+                padding: 2rem 0;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
+            }
+            .book-modal.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            .book-container {
+                max-width: 800px;
+                margin: 0 auto;
+                position: relative;
+            }
+            .book-content {
+                width: 100%;
+                border: 8px solid #fff;
+                border-radius: 4px;
+                box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            }
+            .book-nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 1rem;
+                padding: 0 1rem;
+            }
+            .book-nav button {
+                background: #165DFF;
+                color: white;
+                border: none;
+                padding: 0.5rem 1.5rem;
+                border-radius: 4px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                transition: background 0.3s;
+            }
+            .book-nav button:disabled {
+                background: #999;
+                cursor: not-allowed;
+            }
+            .book-nav button:hover:not(:disabled) {
+                background: #0E48E0;
+            }
+            .book-page-num {
+                color: white;
+                font-size: 1rem;
+                font-weight: 500;
+            }
+            .close-book {
+                position: absolute;
+                top: -2rem;
+                right: 0;
+                color: white;
+                font-size: 2rem;
+                cursor: pointer;
+                width: 2rem;
+                height: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: color 0.3s;
+            }
+            .close-book:hover {
+                color: #36CFC9;
+            }
+            .scene-btn.active {
+                @apply bg-primary/10 border-primary/30;
+            }
+            .prose {
+                @apply text-gray-700;
+            }
+            .prose h4 {
+                @apply text-lg mb-2;
+            }
+            .prose p {
+                @apply mb-2;
+            }
+            .prose ol, .prose ul {
+                @apply mb-3;
+            }
+            .q-tab.active {
+                background-color: white;
+                font-weight: 500;
+            }
+            .line-clamp-2 {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
         }
     </style>
 </head>
@@ -66,6 +169,7 @@
                 <a href="#health" class="text-gray-700 hover:text-primary transition-colors">健康舱</a>
                 <a href="#travel" class="text-gray-700 hover:text-primary transition-colors">文旅舱</a>
                 <a href="#agriculture" class="text-gray-700 hover:text-primary transition-colors">农产舱</a>
+                <a href="#culture" class="text-gray-700 hover:text-primary transition-colors">文创舱</a>
             </div>
             
             <button id="menuBtn" class="md:hidden text-gray-700 focus:outline-none">
@@ -79,6 +183,7 @@
                 <a href="#health" class="py-2 text-gray-700 hover:text-primary transition-colors">健康舱</a>
                 <a href="#travel" class="py-2 text-gray-700 hover:text-primary transition-colors">文旅舱</a>
                 <a href="#agriculture" class="py-2 text-gray-700 hover:text-primary transition-colors">农产舱</a>
+                <a href="#culture" class="py-2 text-gray-700 hover:text-primary transition-colors">文创舱</a>
             </div>
         </div>
     </header>
@@ -87,22 +192,25 @@
     <section class="relative h-[55vh] md:h-[75vh] overflow-hidden">
         <div id="carousel" class="h-full">
             <div class="carousel-item active h-full">
-                <img src="1.jpg" alt="雨航员气象方舟" class="absolute inset-0 w-full h-full object-cover">
+                <img src="images/首页.png" alt="首页" class="absolute inset-0 w-full h-full object-cover">
             </div>
             <div class="carousel-item h-full">
-                <img src="2.jpg" alt="气象科普场景" class="absolute inset-0 w-full h-full object-cover">
+                <img src="images/1.jpg" alt="雨航员气象方舟" class="absolute inset-0 w-full h-full object-cover">
             </div>
             <div class="carousel-item h-full">
-                <img src="3.jpg" alt="气象与健康" class="absolute inset-0 w-full h-full object-cover">
+                <img src="images/2.jpg" alt="气象科普场景" class="absolute inset-0 w-full h-full object-cover">
             </div>
             <div class="carousel-item h-full">
-                <img src="4.jpg" alt="气象文旅" class="absolute inset-0 w-full h-full object-cover">
+                <img src="images/3.jpg" alt="气象与健康" class="absolute inset-0 w-full h-full object-cover">
             </div>
             <div class="carousel-item h-full">
-                <img src="5.jpg" alt="气象与城市" class="absolute inset-0 w-full h-full object-cover">
+                <img src="images/4.jpg" alt="气象文旅" class="absolute inset-0 w-full h-full object-cover">
             </div>
             <div class="carousel-item h-full">
-                <img src="6.jpg" alt="气象与自然" class="absolute inset-0 w-full h-full object-cover">
+                <img src="images/5.jpg" alt="气象与城市" class="absolute inset-0 w-full h-full object-cover">
+            </div>
+            <div class="carousel-item h-full">
+                <img src="images/6.jpg" alt="气象与自然" class="absolute inset-0 w-full h-full object-cover">
             </div>
         </div>
         <div class="container mx-auto px-4 h-full flex items-center relative z-20">
@@ -133,31 +241,40 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="https://picsum.photos/600/400?random=10" alt="儿童气象绘本" class="w-full h-48 object-cover">
+                    <img src="images/卡通气象.jpg" alt="儿童气象绘本" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">卡通气象绘本</h3>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-child text-secondary"></i>
+                            卡通气象绘本(6-12岁)
+                        </h3>
                         <p class="text-gray-600 mb-4">面向学龄前儿童的情景式气象科普绘本，趣味学习气象知识。</p>
-                        <a href="#" class="text-primary font-medium hover:underline">
+                        <a href="#" class="text-primary font-medium hover:underline flex items-center gap-2">
                             查看绘本 <i class="fa fa-book ml-1"></i>
                         </a>
                     </div>
                 </div>
                 <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="科普视频封面.png" alt="可视化课程" class="w-full h-48 object-cover">
+                    <img src="images/科普视频封面.png" alt="可视化课程" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">可视化原理课程</h3>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-video-camera text-secondary"></i>
+                            可视化原理课程(12-18岁)
+                        </h3>
                         <p class="text-gray-600 mb-4">针对青少年设计的气象科学原理可视化解析课程，直观易懂。</p>
-                        <button id="playVideoBtn" class="text-primary font-medium hover:underline">
+                        <button id="playVideoBtn" class="text-primary font-medium hover:underline flex items-center gap-2">
                             观看课程 <i class="fa fa-play-circle ml-1"></i>
                         </button>
                     </div>
                 </div>
                     <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
-                        <img src="https://picsum.photos/600/400?random=12" alt="防灾指南" class="w-full h-48 object-cover">
+                        <img src="images/防灾减灾指南图.jpg" alt="防灾指南" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">防灾减灾指南</h3>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-shield text-secondary"></i>
+                            防灾减灾指南(18岁以上)
+                        </h3>
                         <p class="text-gray-600 mb-4">为成人提供的气象防灾减灾实用指南，结合实际应用场景。</p>
-                        <a href="#" class="text-primary font-medium hover:underline">
+                        <a href="#" class="text-primary font-medium hover:underline flex items-center gap-2">
                             下载手册 <i class="fa fa-download ml-1"></i>
                         </a>
                     </div>
@@ -181,37 +298,52 @@
                          class="w-full h-48 object-cover"
                          style="object-position: 50% 45%;">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">气候敏感性疾病防护</h3>
-                        <p class="text-gray-600 mb-4">联合医疗机构研发的气候敏感性疾病防护指南，科学预防。</p>
-                        <a href="health-book.html" target="_blank" class="text-primary font-medium hover:underline">
-                            查看指南 <i class="fa fa-book-open ml-1"></i>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-heartbeat text-secondary"></i>
+                            气候敏感性疾病防护
+                        </h3>
+                        <p class="text-gray-600 mb-4">气候敏感性疾病防护指南，科学预防。</p>
+                        <!-- 修改为打开健康手册翻页书 -->
+                        <a href="javascript:void(0)" id="openHealthBook" class="text-primary font-medium hover:underline flex items-center gap-2">
+                            查看指南 <i class="fa fa-heartbeat ml-1"></i>
                         </a>
                     </div>
                 </div>
                 <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="https://picsum.photos/600/400?random=21" alt="季节性健康提示" class="w-full h-48 object-cover">
+                    <img src="images/季节性健康提示.png" alt="季节性健康提示" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">季节性健康提示</h3>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-calendar-check-o text-secondary"></i>
+                            季节性健康提示
+                        </h3>
                         <p class="text-gray-600 mb-4">根据季节气候变化，提供针对性的健康管理建议。</p>
-                        <a href="#" class="text-primary font-medium hover:underline">
+                        <a href="#" class="text-primary font-medium hover:underline flex items-center gap-2">
                             了解更多 <i class="fa fa-info-circle ml-1"></i>
                         </a>
                     </div>
                 </div>
                 <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="https://picsum.photos/600/400?random=22" alt="人居环境评估" class="w-full h-48 object-cover">
+                    <img src="images/气候健康适应问答.png" alt="居民气象健康适应性调查" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">人居环境气象风险评估</h3>
-                        <p class="text-gray-600 mb-4">评估人居环境中的气象风险，提供健康防护方案。</p>
-                        <a href="#" class="text-primary font-medium hover:underline">
-                            申请评估 <i class="fa fa-check-square-o ml-1"></i>
-                        </a>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-file-text-o text-secondary"></i>
+                            居民气象健康适应性调查
+                        </h3>
+                        <p class="text-gray-600 mb-4">社区工作者线下采集居民气象健康信息，支持在线填写或上传纸质问卷扫描件，平台生成健康风险报告。</p>
+                        <div class="flex gap-3">
+                            <a href="javascript:void(0)" id="openHealthSurvey" class="flex-1 text-primary font-medium hover:underline flex items-center justify-center gap-2 py-2">
+                                在线填写 <i class="fa fa-pencil ml-1"></i>
+                            </a>
+                            <a href="javascript:void(0)" id="openFileUpload" class="flex-1 text-primary font-medium hover:underline flex items-center justify-center gap-2 py-2">
+                                上传问卷 <i class="fa fa-upload ml-1"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+                </div>
         </div>
     </section>
-
+    
     <!-- 文旅舱 -->
     <section id="travel" class="py-16 bg-white">
         <div class="container mx-auto px-4">
@@ -223,34 +355,46 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
                     <img src="沐气象流光 赴山川苍茫（雨航员版）/封面.jpg" 
-                         alt="四季气象研学线路手册封面" 
-                         class="w-full h-48 object-cover"
-                         style="object-position: 50% 70%;">
+                    alt="四季气象研学线路手册封面" 
+                    class="w-full h-48 object-cover"
+                    style="object-position: 50% 70%;">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">四季气象研学线路</h3>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-map-signs text-secondary"></i>
+                            四季气象研学线路
+                        </h3>
                         <p class="text-gray-600 mb-4">整合气候与文旅资源，设计特色气象主题旅游线路。</p>
-                        <a href="travel-book.html" target="_blank" class="text-primary font-medium hover:underline">
-                            查看线路 <i class="fa fa-book-open ml-1"></i>
+                        <a href="javascript:void(0)" id="openTravelBook" class="text-primary font-medium hover:underline flex items-center gap-2">
+                            查看线路 <i class="fa fa-map-signs ml-1"></i>
                         </a>
                     </div>
                 </div>
                 <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="https://picsum.photos/600/400?random=31" alt="节气文创" class="w-full h-48 object-cover">
+                    <img src="images/芒种.jpg" 
+                        alt="二十四节气展馆" 
+                        class="w-full h-48 object-cover"
+                        style="object-position: 50% 10%;">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">二十四节气文创</h3>
-                        <p class="text-gray-600 mb-4">以二十四节气为核心元素的系列文创衍生品，传承气象文化。</p>
-                        <a href="#" class="text-primary font-medium hover:underline">
-                            浏览文创 <i class="fa fa-shopping-bag ml-1"></i>
-                        </a>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-university text-secondary"></i>
+                            二十四节气展馆
+                        </h3>
+                        <p class="text-gray-600 mb-4">沉浸式二十四节气数字展馆，融合气象知识、民俗文化与自然物候，通过互动展项解读节气与气象的深层关联。</p>
+                        <a href="#" class="text-primary font-medium hover:underline flex items-center gap-2">
+                        进入展馆 <i class="fa fa-street-view ml-1"></i>
+                    </a>
                     </div>
                 </div>
                 <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="https://picsum.photos/600/400?random=32" alt="研学活动" class="w-full h-48 object-cover">
+                    <img src="images/个性化旅游.jpg" alt="个性化旅游路线定制" class="w-full h-48 object-cover" style="object-position: 50% 70%;">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">研学活动预约</h3>
-                        <p class="text-gray-600 mb-4">参与气象观测、物候观察等研学活动，沉浸式学习气象知识。</p>
-                        <a href="#" class="text-primary font-medium hover:underline">
-                            立即预约 <i class="fa fa-calendar ml-1"></i>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-map text-secondary"></i>
+                            个性化旅游路线定制
+                        </h3>
+                        <p class="text-gray-600 mb-4">结合实时气象与您的喜好，1:1专属定制旅游路线，30秒填写即可获取智能规划方案。</p>
+                        <a href="javascript:void(0)" id="openTravelForm" class="text-primary font-medium hover:underline flex items-center gap-2">
+                            立即定制 <i class="fa fa-edit ml-1"></i>
                         </a>
                     </div>
                 </div>
@@ -259,7 +403,7 @@
     </section>
 
     <!-- 农产舱 -->
-    <section id="agriculture" class="py-16 bg-gray-50">
+    <section id="agriculture" class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">农产舱 - 田园知学堂</h2>
@@ -268,39 +412,385 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="https://picsum.photos/600/400?random=50" alt="农业气象科普" class="w-full h-48 object-cover">
+                    <img src="images/农业气象科普课程.jpg" alt="农业气象科普" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">农业气象科普课程</h3>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-graduation-cap text-secondary"></i>
+                            农业气象科普课程
+                        </h3>
                         <p class="text-gray-600 mb-4">面向农户开发的农业气象科普课程，结合生产实践。</p>
-                        <a href="#" class="text-primary font-medium hover:underline">
+                        <a href="#" class="text-primary font-medium hover:underline flex items-center gap-2">
                             学习课程 <i class="fa fa-graduation-cap ml-1"></i>
                         </a>
                     </div>
                 </div>
                 <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="https://picsum.photos/600/400?random=51" alt="田间知识手册" class="w-full h-48 object-cover">
+                    <img src="images/气象农业灾害防控指导.jpg" alt="灾害防控指导" class="w-full h-48 object-cover" style="object-position: 50% 100%;">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">田间气象知识手册</h3>
-                        <p class="text-gray-600 mb-4">讲解农业气象灾害与防护原理，指导田间生产。</p>
-                        <a href="#" class="text-primary font-medium hover:underline">
-                            下载手册 <i class="fa fa-book ml-1"></i>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-exclamation-triangle text-secondary"></i>
+                            气象农业灾害防控指导
+                        </h3>
+                        <p class="text-gray-600 mb-4">结合当地生产特点，提供农业气象灾害防控实操服务。</p>
+                        <a href="#" class="text-primary font-medium hover:underline flex items-center gap-2">
+                            获取指导 <i class="fa fa-life-ring ml-1"></i>
                         </a>
                     </div>
                 </div>
+                <!-- 农业气象问答悬赏平台卡片 -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <img src="https://picsum.photos/600/400?random=52" alt="灾害防控指导" class="w-full h-48 object-cover">
+                    <img src="images/农业气象问答悬赏平台.jpg" alt="农业气象问答悬赏平台" class="w-full h-48 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-3">气象灾害防控指导</h3>
-                        <p class="text-gray-600 mb-4">结合当地生产特点，提供农业气象灾害防控实操服务。</p>
-                        <a href="#" class="text-primary font-medium hover:underline">
-                            获取指导 <i class="fa fa-life-ring ml-1"></i>
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-question-circle text-secondary"></i>
+                            农业气象问答悬赏平台
+                        </h3>
+                        <p class="text-gray-600 mb-4">农户可发布农业气象问题并设置赏金，其他农户/行业专家解答后可领取赏金，精准解决田间生产气象难题。</p>
+                        <a href="javascript:void(0)" id="openAgriQAPlatform" class="text-primary font-medium hover:underline flex items-center gap-2">
+                            进入平台 <i class="fa fa-comments-o ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 农业气象问答悬赏平台弹窗 -->
+        <div id="agriQAPlatformModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-4">
+            <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+                <!-- 平台头部 -->
+                <div class="border-b p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-primary">农业气象问答悬赏平台</h2>
+                    <button id="closeAgriQAPlatform" class="text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+                </div>
+        
+                <!-- 平台主体（标签切换） -->
+                <div class="flex flex-col md:flex-row flex-1 overflow-hidden">
+                    <!-- 左侧标签栏 -->
+                    <div class="border-b md:border-b-0 md:border-r p-4 bg-light">
+                        <div class="flex flex-col gap-2">
+                            <button class="q-tab active py-2 px-4 rounded-lg text-left hover:bg-white transition-colors" data-tab="publish">
+                                <i class="fa fa-pencil mr-2"></i>发布问题（悬赏）
+                            </button>
+                            <button class="q-tab py-2 px-4 rounded-lg text-left hover:bg-white transition-colors" data-tab="question-list">
+                                <i class="fa fa-list mr-2"></i>问题列表（接单）
+                            </button>
+                            <button class="q-tab py-2 px-4 rounded-lg text-left hover:bg-white transition-colors" data-tab="my-questions">
+                                <i class="fa fa-user mr-2"></i>我的问题
+                            </button>
+                            <button class="q-tab py-2 px-4 rounded-lg text-left hover:bg-white transition-colors" data-tab="my-answers">
+                                <i class="fa fa-reply mr-2"></i>我的回答
+                            </button>
+                            <button class="q-tab py-2 px-4 rounded-lg text-left hover:bg-white transition-colors" data-tab="my-rewards">
+                                <i class="fa fa-money mr-2"></i>我的赏金
+                            </button>
+                        </div>
+                    </div>
+        
+                    <!-- 右侧内容区 -->
+                    <div class="flex-1 overflow-y-auto p-6">
+                        <!-- 1. 发布问题标签页 -->
+                        <div class="q-content active" id="publish-tab">
+                            <h3 class="text-lg font-semibold mb-4">发布农业气象问题（设置赏金）</h3>
+                            <form id="publishQuestionForm" class="space-y-6">
+                                <div>
+                                    <label class="block text-gray-700 text-sm mb-1">问题标题 <span class="text-red-500">*</span></label>
+                                    <input type="text" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" placeholder="例如：小麦灌浆期遇到连续阴雨天气该如何应对？" required>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 text-sm mb-1">问题详情 <span class="text-red-500">*</span></label>
+                                    <textarea class="w-full border border-gray-300 rounded px-3 py-2 text-sm" rows="5" placeholder="请详细描述您遇到的农业气象问题，包括作物类型、种植地区、天气情况、具体困扰等..." required></textarea>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-gray-700 text-sm mb-1">作物类型 <span class="text-red-500">*</span></label>
+                                        <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required>
+                                            <option value="">请选择</option>
+                                            <option value="小麦">小麦</option>
+                                            <option value="水稻">水稻</option>
+                                            <option value="玉米">玉米</option>
+                                            <option value="蔬菜">蔬菜</option>
+                                            <option value="水果">水果</option>
+                                            <option value="其他">其他</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 text-sm mb-1">种植地区 <span class="text-red-500">*</span></label>
+                                        <input type="text" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" placeholder="省/市/县/乡镇" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 text-sm mb-1">悬赏金额（元） <span class="text-red-500">*</span></label>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-gray-700">¥</span>
+                                        <input type="number" min="1" step="1" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">注：赏金将在您确认最佳答案后发放给回答者</p>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 text-sm mb-1">问题类型</label>
+                                    <div class="flex flex-wrap gap-2 mt-2">
+                                        <label class="flex items-center gap-1 text-sm bg-light px-3 py-1 rounded-full">
+                                            <input type="checkbox" name="questionType" value="高温"> 高温
+                                        </label>
+                                        <label class="flex items-center gap-1 text-sm bg-light px-3 py-1 rounded-full">
+                                            <input type="checkbox" name="questionType" value="低温"> 低温
+                                        </label>
+                                        <label class="flex items-center gap-1 text-sm bg-light px-3 py-1 rounded-full">
+                                            <input type="checkbox" name="questionType" value="降雨"> 降雨
+                                        </label>
+                                        <label class="flex items-center gap-1 text-sm bg-light px-3 py-1 rounded-full">
+                                            <input type="checkbox" name="questionType" value="大风"> 大风
+                                        </label>
+                                        <label class="flex items-center gap-1 text-sm bg-light px-3 py-1 rounded-full">
+                                            <input type="checkbox" name="questionType" value="霜冻"> 霜冻
+                                        </label>
+                                        <label class="flex items-center gap-1 text-sm bg-light px-3 py-1 rounded-full">
+                                            <input type="checkbox" name="questionType" value="冰雹"> 冰雹
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium">
+                                    发布问题并冻结赏金
+                                </button>
+                            </form>
+                        </div>
+        
+                        <!-- 2. 问题列表标签页 -->
+                        <div class="q-content hidden" id="question-list-tab">
+                            <h3 class="text-lg font-semibold mb-4">待解答的农业气象问题</h3>
+                            
+                            <!-- 筛选栏 -->
+                            <div class="bg-light p-3 rounded-lg mb-4">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <div>
+                                        <label class="block text-xs text-gray-600 mb-1">作物类型</label>
+                                        <select class="w-full border border-gray-300 rounded px-2 py-1 text-sm">
+                                            <option value="">全部</option>
+                                            <option value="小麦">小麦</option>
+                                            <option value="水稻">水稻</option>
+                                            <option value="玉米">玉米</option>
+                                            <option value="蔬菜">蔬菜</option>
+                                            <option value="水果">水果</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-600 mb-1">问题类型</label>
+                                        <select class="w-full border border-gray-300 rounded px-2 py-1 text-sm">
+                                            <option value="">全部</option>
+                                            <option value="高温">高温</option>
+                                            <option value="低温">低温</option>
+                                            <option value="降雨">降雨</option>
+                                            <option value="大风">大风</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-600 mb-1">赏金排序</label>
+                                        <select class="w-full border border-gray-300 rounded px-2 py-1 text-sm">
+                                            <option value="high">从高到低</option>
+                                            <option value="low">从低到高</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <!-- 问题列表 -->
+                            <div class="space-y-4">
+                                <!-- 问题项1 -->
+                                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="font-medium text-primary">小麦灌浆期遇到连续阴雨天气该如何应对？</h4>
+                                        <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">悬赏 ¥10</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+                                        我是河南驻马店的农户，种植的冬小麦正处于灌浆期，最近连续7天阴雨天气，担心小麦倒伏和病害，请问该采取哪些应急措施？
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-3">
+                                        <span class="text-xs bg-light px-2 py-1 rounded-full">小麦</span>
+                                        <span class="text-xs bg-light px-2 py-1 rounded-full">降雨</span>
+                                        <span class="text-xs bg-light px-2 py-1 rounded-full">河南驻马店</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-xs text-gray-500">
+                                        <span>发布人：李农户 · 2小时前</span>
+                                        <button class="text-primary hover:underline answer-btn" data-question-id="1">
+                                            我来解答 <i class="fa fa-reply ml-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+        
+                                <!-- 问题项2 -->
+                                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="font-medium text-primary">大棚番茄遇到高温高湿天气如何防裂果？</h4>
+                                        <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">悬赏 ¥20</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+                                        山东寿光大棚番茄进入膨果期，最近气温35℃以上，湿度80%，出现大量裂果现象，求有效的防控方法？
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-3">
+                                        <span class="text-xs bg-light px-2 py-1 rounded-full">蔬菜</span>
+                                        <span class="text-xs bg-light px-2 py-1 rounded-full">高温</span>
+                                        <span class="text-xs bg-light px-2 py-1 rounded-full">高湿</span>
+                                        <span class="text-xs bg-light px-2 py-1 rounded-full">山东寿光</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-xs text-gray-500">
+                                        <span>发布人：王农户 · 5小时前</span>
+                                        <button class="text-primary hover:underline answer-btn" data-question-id="2">
+                                            我来解答 <i class="fa fa-reply ml-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+        
+                                <!-- 问题项3（专家专属） -->
+                                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow border-primary/30 bg-primary/5">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="font-medium text-primary">玉米苗期遭遇倒春寒如何补救？</h4>
+                                        <div class="flex gap-2">
+                                            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">悬赏 ¥40</span>
+                                            <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">专家优先</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+                                        东北吉林玉米苗期遭遇-2℃倒春寒，部分苗株受冻发黄，请问如何补救才能减少减产？
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-3">
+                                        <span class="text-xs bg-light px-2 py-1 rounded-full">玉米</span>
+                                        <span class="text-xs bg-light px-2 py-1 rounded-full">低温</span>
+                                        <span class="text-xs bg-light px-2 py-1 rounded-full">倒春寒</span>
+                                        <span class="text-xs bg-light px-2 py-1 rounded-full">吉林</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-xs text-gray-500">
+                                        <span>发布人：张农户 · 1天前</span>
+                                        <button class="text-primary hover:underline answer-btn" data-question-id="3">
+                                            我来解答 <i class="fa fa-reply ml-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <!-- 3. 我的问题标签页（示例） -->
+                        <div class="q-content hidden" id="my-questions-tab">
+                            <h3 class="text-lg font-semibold mb-4">我的发布的问题</h3>
+                            <div class="text-center py-8 text-gray-500">
+                                <i class="fa fa-question-circle text-4xl mb-2"></i>
+                                <p>您还未发布任何农业气象问题</p>
+                                <button class="mt-3 text-primary hover:underline" onclick="switchTab('publish')">
+                                    立即发布第一个问题
+                                </button>
+                            </div>
+                        </div>
+        
+                        <!-- 4. 我的回答标签页（示例） -->
+                        <div class="q-content hidden" id="my-answers-tab">
+                            <h3 class="text-lg font-semibold mb-4">我回答的问题</h3>
+                            <div class="text-center py-8 text-gray-500">
+                                <i class="fa fa-reply text-4xl mb-2"></i>
+                                <p>您还未回答任何农业气象问题</p>
+                                <button class="mt-3 text-primary hover:underline" onclick="switchTab('question-list')">
+                                    去问题列表接单
+                                </button>
+                            </div>
+                        </div>
+        
+                        <!-- 5. 我的赏金标签页（示例） -->
+                        <div class="q-content hidden" id="my-rewards-tab">
+                            <h3 class="text-lg font-semibold mb-4">我的赏金账户</h3>
+                            <div class="bg-light rounded-lg p-4 mb-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-600">可用余额</span>
+                                    <span class="text-xl font-bold text-primary">¥0.00</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm text-gray-500">
+                                    <span>冻结赏金</span>
+                                    <span>¥0.00</span>
+                                </div>
+                            </div>
+                            <button class="w-full border border-primary text-primary py-2 rounded-lg hover:bg-primary/5 transition-colors text-sm">
+                                充值赏金
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 回答问题弹窗 -->
+        <div id="answerQuestionModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-4">
+            <div class="bg-white rounded-xl max-w-lg w-full">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-bold text-primary">回答问题</h2>
+                        <button id="closeAnswerQuestion" class="text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+                    </div>
+                    <div id="answerQuestionTitle" class="font-medium mb-4 text-gray-800">
+                        小麦灌浆期遇到连续阴雨天气该如何应对？
+                    </div>
+                    <form id="answerQuestionForm" class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm mb-1">我的回答 <span class="text-red-500">*</span></label>
+                            <textarea class="w-full border border-gray-300 rounded px-3 py-2 text-sm" rows="6" placeholder="请详细、准确地回答该问题，确保建议具有可操作性..." required></textarea>
+                        </div>
+                        <div>
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" name="isExpert"> 我是农业气象专家（需实名认证）
+                            </label>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium">
+                            提交回答
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- 文创舱 -->
+        <section id="culture" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">文创舱 - 气象创意馆</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">融合气象知识与创意设计，打造兼具实用与艺术价值的文创产品</p>
+                </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 实用文创 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/实用.jpg" 
+                        alt="实用文创" 
+                        class="w-full h-48 object-cover"
+                        style="object-position: 50% 10%;">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-shopping-cart text-secondary"></i>
+                            实用文创
+                        </h3>
+                        <p class="text-gray-600 mb-4">以气象元素为设计核心的日常实用文创，包含气象观测手账本、节气餐具、天气预警摆件等，兼具功能性与科普性。</p>
+                        <a href="#" class="text-primary font-medium hover:underline flex items-center gap-2">
+                            查看产品 <i class="fa fa-shopping-cart ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 艺术文创 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/艺术.jpg" 
+                        alt="艺术文创" 
+                        class="w-full h-48 object-cover"
+                        style="object-position: 50% 60%;">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i class="fa fa-paint-brush text-secondary"></i>
+                            艺术文创
+                        </h3>
+                        <p class="text-gray-600 mb-4">联合艺术家打造的气象主题艺术文创，涵盖节气插画、气象景观版画、天气主题文创摆件等，传递气象之美。</p>
+                        <a href="#" class="text-primary font-medium hover:underline flex items-center gap-2">
+                            欣赏作品 <i class="fa fa-paint-brush ml-1"></i>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- 页脚 -->
     <footer class="bg-dark text-white py-12">
         <div class="container mx-auto px-4">
@@ -325,6 +815,7 @@
                         <li><a href="#health" class="text-gray-400 hover:text-secondary transition-colors">健康舱</a></li>
                         <li><a href="#travel" class="text-gray-400 hover:text-secondary transition-colors">文旅舱</a></li>
                         <li><a href="#agriculture" class="text-gray-400 hover:text-secondary transition-colors">农产舱</a></li>
+                        <li><a href="#culture" class="text-gray-400 hover:text-secondary transition-colors">文创舱</a></li>
                     </ul>
                 </div>
                 
@@ -346,24 +837,532 @@
                     </ul>
                 </div>
             </div>
-            <!-- 模态框 -->
-            <div id="videoModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center">
-                <div class="bg-white p-4 rounded-lg max-w-4xl w-full max-h-[90vh]">
-                    <div class="flex justify-end mb-2">
-                        <button id="closeModal" class="text-gray-500 text-xl">&times;</button>
-                    </div>
-                    <video class="w-full" controls>
-                        <source src="科普视频.mp4" type="video/mp4">
-                        您的浏览器不支持视频播放，请更新浏览器。
-                    </video>
-                </div>
-            </div>
             <div class="border-t border-gray-700 pt-8 text-center text-gray-500">
                 <p>© 2025 雨航员气象方舟 版权所有 | 川ICP备12345678号</p>
             </div>
         </div>
     </footer>
-
+    
+    <!-- 视频模态框 -->
+    <div id="videoModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center">
+        <div class="bg-white p-4 rounded-lg max-w-4xl w-full max-h-[90vh]">
+            <div class="flex justify-end mb-2">
+                <button id="closeModal" class="text-gray-500 text-xl">&times;</button>
+            </div>
+            <video class="w-full" controls>
+                <source src="科普视频.mp4" type="video/mp4">
+                您的浏览器不支持视频播放，请更新浏览器。
+            </video>
+        </div>
+    </div>
+    
+    <!-- 研学线路翻页书模态框 -->
+    <div id="travelBookModal" class="book-modal">
+        <div class="book-container">
+            <span class="close-book" id="closeTravelBook">&times;</span>
+            <img id="travelBookImage" class="book-content" src="沐气象流光 赴山川苍茫（雨航员版）/封面.jpg" alt="研学线路手册">
+            <div class="book-nav">
+                <button id="travelPrevPage" disabled>
+                    <i class="fa fa-angle-left"></i> 上一页
+                </button>
+                <span class="book-page-num" id="travelPageNum">1 / 10</span>
+                <button id="travelNextPage">
+                    下一页 <i class="fa fa-angle-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 健康手册翻页书模态框 -->
+    <div id="healthBookModal" class="book-modal">
+        <div class="book-container">
+            <span class="close-book" id="closeHealthBook">&times;</span>
+            <img id="healthBookImage" class="book-content" src="观天知冷暖 循气护健康（雨航员版)/封面.jpg" alt="气候敏感性疾病防护手册">
+            <div class="book-nav">
+                <button id="healthPrevPage" disabled>
+                    <i class="fa fa-angle-left"></i> 上一页
+                </button>
+                <span class="book-page-num" id="healthPageNum">1 / 10</span>
+                <button id="healthNextPage">
+                    下一页 <i class="fa fa-angle-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- 1.居民气象健康适应性调查问卷弹窗-->
+    <div id="healthSurveyModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <!-- 弹窗头部 -->
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-primary">居民气象健康适应性调查问卷</h2>
+                    <button id="closeHealthSurvey" class="text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+                </div>
+    
+                <!-- 问卷表单 -->
+                <form id="healthSurveyForm" class="space-y-6">
+                    <!-- 一、基础信息 -->
+                    <div class="border-b pb-4">
+                        <h4 class="font-medium text-gray-800 mb-3">一、基础信息</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 text-sm mb-1">1. 姓名 <span class="text-red-500">*</span></label>
+                                <input type="text" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm mb-1">2. 性别 <span class="text-red-500">*</span></label>
+                                <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required>
+                                    <option value="">请选择</option>
+                                    <option value="男">男</option>
+                                    <option value="女">女</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm mb-1">3. 年龄 <span class="text-red-500">*</span></label>
+                                <input type="number" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm mb-1">4. 所在地区 <span class="text-red-500">*</span></label>
+                                <input type="text" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" placeholder="省/市/区/街道" required>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-gray-700 text-sm mb-1">5. 详细居住地址 <span class="text-red-500">*</span></label>
+                            <input type="text" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required>
+                        </div>
+                    </div>
+    
+                    <!-- 二、健康信息 -->
+                    <div class="border-b pb-4">
+                        <h4 class="font-medium text-gray-800 mb-3">二、健康信息</h4>
+                        <!-- 6. 人群类型 -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2">6. 人群类型 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="crowdType" value="普通成年人" required> 普通成年人</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="crowdType" value="60岁及以上老年人"> 60岁及以上老年人</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="crowdType" value="18岁以下青少年儿童"> 18岁以下青少年儿童</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="crowdType" value="孕妇"> 孕妇</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="crowdType" value="慢性病患者"> 慢性病患者</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="crowdType" value="体质虚弱/免疫力低下人群"> 体质虚弱/免疫力低下人群</label>
+                            </div>
+                        </div>
+    
+                        <!-- 7. 慢性疾病（多选） -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2">7. 患有慢性疾病 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="chronicDisease" value="高血压"> 高血压</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="chronicDisease" value="糖尿病"> 糖尿病</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="chronicDisease" value="心脑血管疾病"> 心脑血管疾病</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="chronicDisease" value="呼吸道疾病"> 呼吸道疾病</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="chronicDisease" value="风湿关节疾病"> 风湿关节疾病</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="chronicDisease" value="肠胃疾病"> 肠胃疾病</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="chronicDisease" value="无" required> 无</label>
+                            </div>
+                        </div>
+    
+                        <!-- 8. 长期服药 -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2">8. 是否长期服药 <span class="text-red-500">*</span></label>
+                            <div class="flex gap-4">
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="longMedication" value="是" required> 是</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="longMedication" value="否"> 否</label>
+                            </div>
+                        </div>
+    
+                        <!-- 9. 近一个月身体不适（多选） -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2">9. 近一个月身体不适 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="discomfort" value="头晕头痛"> 头晕头痛</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="discomfort" value="胸闷心慌"> 胸闷心慌</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="discomfort" value="呼吸不畅"> 呼吸不畅</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="discomfort" value="关节疼痛"> 关节疼痛</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="discomfort" value="畏寒怕冷"> 畏寒怕冷</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="discomfort" value="乏力"> 乏力</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="discomfort" value="无不适" required> 无不适</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 三、气象适应信息 -->
+                    <div class="border-b pb-4">
+                        <h4 class="font-medium text-gray-800 mb-3">三、气象适应信息</h4>
+                        <!-- 10. 气温敏感程度 -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2">10. 对气温变化敏感程度 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="tempSensitive" value="非常敏感" required> 非常敏感</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="tempSensitive" value="比较敏感"> 比较敏感</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="tempSensitive" value="一般"> 一般</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="tempSensitive" value="不敏感"> 不敏感</label>
+                            </div>
+                        </div>
+    
+                        <!-- 11. 易引发不适的天气（多选） -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2">11. 易引发不适的天气 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="badWeather" value="寒潮低温"> 寒潮低温</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="badWeather" value="大风"> 大风</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="badWeather" value="高温闷热"> 高温闷热</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="badWeather" value="雾霾空气污染"> 雾霾空气污染</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="badWeather" value="阴雨潮湿"> 阴雨潮湿</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="badWeather" value="雨雪天气"> 雨雪天气</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="badWeather" value="无明显影响" required> 无明显影响</label>
+                            </div>
+                        </div>
+    
+                        <!-- 12. 极端天气活动场所 -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2">12. 极端天气主要活动场所 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="activityPlace" value="室内居家" required> 室内居家</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="activityPlace" value="室内工作"> 室内工作</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="activityPlace" value="户外作业"> 户外作业</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="activityPlace" value="户外出行"> 户外出行</label>
+                            </div>
+                        </div>
+    
+                        <!-- 13. 关注气象预警 -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2">13. 是否关注气象预警 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="alertAttention" value="每天关注" required> 每天关注</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="alertAttention" value="偶尔关注"> 偶尔关注</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="alertAttention" value="很少关注"> 很少关注</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="alertAttention" value="从不关注"> 从不关注</label>
+                            </div>
+                        </div>
+    
+                        <!-- 14. 极端天气防护措施 -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2">14. 极端天气是否采取防护措施 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="protection" value="一定会" required> 一定会</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="protection" value="偶尔会"> 偶尔会</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="protection" value="很少会"> 很少会</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="radio" name="protection" value="不会"> 不会</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 四、物资与需求 -->
+                    <div class="border-b pb-4">
+                        <h4 class="font-medium text-gray-800 mb-3">四、物资与需求</h4>
+                        <!-- 15. 家中具备物品（多选） -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2">15. 家中具备物品 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="homeItems" value="体温计"> 体温计</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="homeItems" value="血压计"> 血压计</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="homeItems" value="常用药品"> 常用药品</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="homeItems" value="保暖物资"> 保暖物资</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="homeItems" value="降温防暑物资"> 降温防暑物资</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="homeItems" value="无" required> 无</label>
+                            </div>
+                        </div>
+    
+                        <!-- 16. 希望获取的健康提醒（多选） -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-2">16. 希望获取的健康提醒 <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="healthRemind" value="寒潮保暖"> 寒潮保暖</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="healthRemind" value="高温防暑"> 高温防暑</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="healthRemind" value="呼吸道防护"> 呼吸道防护</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="healthRemind" value="心脑血管防护"> 心脑血管防护</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="healthRemind" value="关节养护"> 关节养护</label>
+                                <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="healthRemind" value="日常气温适应" required> 日常气温适应</label>
+                            </div>
+                        </div>
+    
+                        <!-- 17. 其他特殊需求 -->
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm mb-1">17. 其他特殊需求</label>
+                            <textarea class="w-full border border-gray-300 rounded px-3 py-2 text-sm" rows="2" placeholder="请填写其他特殊需求"></textarea>
+                        </div>
+                    </div>
+    
+                    <!-- 五、采集信息 -->
+                    <div>
+                        <h4 class="font-medium text-gray-800 mb-3">五、采集信息</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 text-sm mb-1">收集人 <span class="text-red-500">*</span></label>
+                                <input type="text" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm mb-1">收集日期 <span class="text-red-500">*</span></label>
+                                <input type="date" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 提交按钮 -->
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium">
+                            提交问卷并生成健康风险报告
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 2. 问卷文件上传弹窗 -->
+    <div id="fileUploadModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-lg w-full">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-primary">上传问卷文件</h2>
+                    <button id="closeFileUpload" class="text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+                </div>
+    
+                <form id="fileUploadForm" class="space-y-6">
+                    <!-- 基础信息（匹配问卷） -->
+                    <div class="border-b pb-4">
+                        <h4 class="font-medium text-gray-800 mb-3">问卷基础信息</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 text-sm mb-1">居民姓名 <span class="text-red-500">*</span></label>
+                                <input type="text" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required placeholder="填写问卷居民姓名">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm mb-1">所在地区 <span class="text-red-500">*</span></label>
+                                <input type="text" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required placeholder="省/市/区/街道">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm mb-1">收集人 <span class="text-red-500">*</span></label>
+                                <input type="text" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required placeholder="填写采集人姓名">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm mb-1">收集日期 <span class="text-red-500">*</span></label>
+                                <input type="date" class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 文件上传区域 -->
+                    <div class="border-b pb-4">
+                        <h4 class="font-medium text-gray-800 mb-3">上传问卷文件</h4>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer" id="fileDropArea">
+                            <input type="file" id="surveyFile" class="hidden" accept=".jpg,.jpeg,.png,.pdf,.docx" multiple>
+                            <i class="fa fa-cloud-upload text-4xl text-gray-400 mb-3"></i>
+                            <p class="text-gray-600 text-sm mb-2">点击或拖拽文件至此处上传</p>
+                            <p class="text-gray-400 text-xs">支持格式：JPG/PNG（照片/扫描件）、PDF、Word | 最大5MB/个</p>
+                            <button type="button" class="mt-3 bg-light text-primary py-2 px-4 rounded-lg text-sm hover:bg-primary/10 transition-colors" id="selectFileBtn">
+                                选择文件
+                            </button>
+                        </div>
+    
+                        <!-- 文件预览区域 -->
+                        <div id="filePreview" class="mt-4 hidden">
+                            <h5 class="text-sm font-medium text-gray-700 mb-2">待上传文件：</h5>
+                            <div id="fileList" class="space-y-2"></div>
+                        </div>
+                    </div>
+    
+                    <!-- 备注信息 -->
+                    <div>
+                        <label class="block text-gray-700 text-sm mb-1">备注信息</label>
+                        <textarea class="w-full border border-gray-300 rounded px-3 py-2 text-sm" rows="2" placeholder="填写问卷相关备注（如：纸质问卷共1页/居民特殊说明等）"></textarea>
+                    </div>
+    
+                    <!-- 提交按钮 -->
+                    <div>
+                        <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium">
+                            上传文件并生成健康风险报告
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 个性化旅游路线定制问卷弹窗 -->
+    <div id="travelFormModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-primary">个性化旅游路线定制表单</h2>
+                    <button id="closeTravelForm" class="text-gray-500 text-xl">&times;</button>
+                </div>
+                <p class="text-gray-600 mb-6">
+                    您好！欢迎使用气象一站式服务平台—旅游舱，我们将结合实时气象+您的喜好，为您1:1专属定制旅游路线，只需30秒填写，即可获取智能规划方案～
+                </p>
+    
+                <form id="travelCustomForm">
+                    <!-- 基础出行信息 -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4 text-dark">一、基础出行信息</h3>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">1. 您的称呼：<span class="text-red-500">*</span></label>
+                            <input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">2. 联系电话：<span class="text-red-500">*</span></label>
+                            <input type="tel" class="w-full border border-gray-300 rounded-lg px-3 py-2" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">3. 出行人数：<span class="text-red-500">*</span></label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2"><input type="radio" name="groupSize" value="single" required> 单人</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="groupSize" value="couple"> 双人（情侣/朋友）</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="groupSize" value="family"> 家庭（带老人/小孩）</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="groupSize" value="team"> 团队（3人及以上）</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">4. 计划出行时长：<span class="text-red-500">*</span></label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2"><input type="radio" name="duration" value="short" required> 1-2天（短途）</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="duration" value="medium"> 3-5天（中短途）</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="duration" value="long"> 6-10天（长途）</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="duration" value="extraLong"> 10天以上</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">5. 计划出行时间：<span class="text-red-500">*</span></label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2"><input type="radio" name="timeFrame" value="month" required> 1个月内</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="timeFrame" value="1-3months"> 1-3个月</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="timeFrame" value="3-6months"> 3-6个月</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="timeFrame" value="unknown"> 暂未确定</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">6. 人均预算：<span class="text-red-500">*</span></label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2"><input type="radio" name="budget" value="under500" required> 500元以内</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="budget" value="500-2000"> 500-2000元</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="budget" value="2000-5000"> 2000-5000元</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="budget" value="5000-10000"> 5000-10000元</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="budget" value="over10000"> 10000元以上</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 旅游偏好 -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4 text-dark">二、旅游偏好（可多选）</h3>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">1. 您偏好的景观类型：<span class="text-red-500">*</span></label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2"><input type="checkbox" name="scenery" value="nature" required> 自然景观（山川/海边/森林/雪山/湖泊等）</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="scenery" value="culture"> 人文景观（古镇/古迹/博物馆/文化景点）</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="scenery" value="commercial"> 商业/网红景观（商圈/地标/打卡点）</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="scenery" value="leisure"> 休闲度假（温泉/民宿/康养/露营）</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="scenery" value="theme"> 主题游玩（游乐园/户外/研学）</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">2. 出行主要目的：<span class="text-red-500">*</span></label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2"><input type="checkbox" name="purpose" value="relax" required> 放松休闲</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="purpose" value="photo"> 观光拍照</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="purpose" value="food"> 美食探索</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="purpose" value="culture"> 文化体验</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="purpose" value="family"> 亲子游玩</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="purpose" value="sport"> 户外运动</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 出行习惯 -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4 text-dark">三、出行习惯</h3>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">1. 出行方式：<span class="text-red-500">*</span></label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2"><input type="radio" name="transport" value="selfDrive" required> 自驾</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="transport" value="public"> 公共交通（高铁/飞机）</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="transport" value="charter"> 包车</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="transport" value="noLimit"> 不限制</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">2. 行程节奏：<span class="text-red-500">*</span></label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2"><input type="radio" name="pace" value="slow" required> 轻松慢游</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="pace" value="medium"> 适中舒适</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="pace" value="fast"> 紧凑高效</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="pace" value="free"> 自由随性</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">3. 住宿偏好：<span class="text-red-500">*</span></label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2"><input type="radio" name="accommodation" value="economy" required> 经济酒店</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="accommodation" value="comfortable"> 舒适酒店</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="accommodation" value="homestay"> 特色民宿</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="accommodation" value="luxury"> 高端酒店</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="accommodation" value="noReq"> 无要求</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 气象与特殊需求 -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4 text-dark">四、气象与特殊需求</h3>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">1. 偏好天气：<span class="text-red-500">*</span></label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2"><input type="radio" name="weather" value="sunny" required> 晴天</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="weather" value="cloudy"> 多云</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="weather" value="cool"> 凉爽阴天</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="weather" value="noLimit"> 不限制</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">2. 路线特殊要求：</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2"><input type="checkbox" name="specialReq" value="avoidBadWeather"> 优先避开雨天、高温、大风等恶劣天气</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="specialReq" value="gentleRoute"> 路线平缓，适合老人小孩</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="specialReq" value="localFood"> 包含当地特色美食</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="specialReq" value="accessible"> 无障碍/便捷出行</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="specialReq" value="noReq"> 无特殊需求</label>
+                            </div>
+                            <div class="mt-2">
+                                <label class="block text-gray-700 mb-1">其他：</label>
+                                <input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="请补充其他特殊需求">
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 补充信息 -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4 text-dark">五、补充信息</h3>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">想去的城市/景点：</label>
+                            <input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="请填写您想去的城市或景点">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-1">其他期望：</label>
+                            <textarea class="w-full border border-gray-300 rounded-lg px-3 py-2" rows="3" placeholder="请补充其他期望或要求"></textarea>
+                        </div>
+                    </div>
+    
+                    <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary/90 transition-colors">
+                        提交定制需求
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- JavaScript -->
     <script>
         // 移动端菜单切换
@@ -439,22 +1438,487 @@
         
         // 视频播放
         const playBtn = document.getElementById('playVideoBtn');
-        const closeBtn = document.getElementById('closeModal');
-        const modal = document.getElementById('videoModal');
-        const video = modal.querySelector('video');
+        const closeModal = document.getElementById('closeModal');
+        const videoModal = document.getElementById('videoModal');
+        const video = videoModal.querySelector('video');
         
         playBtn.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        video.play();
+            videoModal.classList.remove('hidden');
+            videoModal.classList.add('flex');
+            video.play();
         });
         
-        closeBtn.addEventListener('click', () => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        video.pause();
-        video.currentTime = 0; // 关闭时重置视频
+        closeModal.addEventListener('click', () => {
+            videoModal.classList.add('hidden');
+            videoModal.classList.remove('flex');
+            video.pause();
+            video.currentTime = 0;
         });
-    </script>
+
+        // ========== 通用翻页书函数 ==========
+        function initBookReader(
+            openBtnId, 
+            modalId, 
+            closeBtnId, 
+            bookImageId, 
+            prevBtnId, 
+            nextBtnId, 
+            pageNumId, 
+            bookPages
+        ) {
+            const openBtn = document.getElementById(openBtnId);
+            const modal = document.getElementById(modalId);
+            const closeBtn = document.getElementById(closeBtnId);
+            const bookImage = document.getElementById(bookImageId);
+            const prevBtn = document.getElementById(prevBtnId);
+            const nextBtn = document.getElementById(nextBtnId);
+            const pageNum = document.getElementById(pageNumId);
+            
+            let currentPage = 0;
+            
+            // 打开翻页书
+            openBtn.addEventListener('click', () => {
+                modal.classList.add('active');
+                currentPage = 0;
+                updateBookPage();
+            });
+            
+            // 关闭翻页书
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+            
+            // 点击模态框外部关闭
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+            
+            // 上一页
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 0) {
+                    currentPage--;
+                    updateBookPage();
+                }
+            });
+            
+            // 下一页
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < bookPages.length - 1) {
+                    currentPage++;
+                    updateBookPage();
+                }
+            });
+            
+            // 更新书页显示
+            function updateBookPage() {
+                bookImage.src = bookPages[currentPage];
+                bookImage.alt = `手册第${currentPage + 1}页`;
+                pageNum.textContent = `${currentPage + 1} / ${bookPages.length}`;
+                
+                // 禁用/启用按钮
+                prevBtn.disabled = currentPage === 0;
+                nextBtn.disabled = currentPage === bookPages.length - 1;
+            }
+            
+            // 键盘翻页
+            document.addEventListener('keydown', (e) => {
+                if (modal.classList.contains('active')) {
+                    if (e.key === 'ArrowLeft' && currentPage > 0) {
+                        currentPage--;
+                        updateBookPage();
+                    } else if (e.key === 'ArrowRight' && currentPage < bookPages.length - 1) {
+                        currentPage++;
+                        updateBookPage();
+                    } else if (e.key === 'Escape') {
+                        modal.classList.remove('active');
+                    }
+                }
+            });
+        }
+
+        // ========== 初始化研学线路手册 ==========
+        const travelBookPages = [
+            '沐气象流光 赴山川苍茫（雨航员版）/封面.jpg',
+            '沐气象流光 赴山川苍茫（雨航员版）/打开第一面（含周边和目录）.jpg',
+            '沐气象流光 赴山川苍茫（雨航员版）/1-2极光.jpg',
+            '沐气象流光 赴山川苍茫（雨航员版）/3-4云海.jpg',
+            '沐气象流光 赴山川苍茫（雨航员版）/5-6冰川.jpg',
+            '沐气象流光 赴山川苍茫（雨航员版）/7-8冰泡湖.jpg',
+            '沐气象流光 赴山川苍茫（雨航员版）/9-10雾凇.jpg',
+            '沐气象流光 赴山川苍茫（雨航员版）/11-12日照金山.jpg',
+            '沐气象流光 赴山川苍茫（雨航员版）/打开最后一面.jpg',
+            '沐气象流光 赴山川苍茫（雨航员版）/封底.jpg'
+        ];
+
+        initBookReader(
+            'openTravelBook',
+            'travelBookModal',
+            'closeTravelBook',
+            'travelBookImage',
+            'travelPrevPage',
+            'travelNextPage',
+            'travelPageNum',
+            travelBookPages
+        );
+
+        // ========== 初始化健康手册 ==========
+        const healthBookPages = [
+            '观天知冷暖 循气护健康（雨航员版)/封面.jpg',
+            '观天知冷暖 循气护健康（雨航员版)/打开第一页（周边+目录）.jpg',
+            '观天知冷暖 循气护健康（雨航员版)/1-2高温.jpg',
+            '观天知冷暖 循气护健康（雨航员版)/3-4寒潮.jpg',
+            '观天知冷暖 循气护健康（雨航员版)/5-6低压高湿.jpg',
+            '观天知冷暖 循气护健康（雨航员版)/7-8干燥少雨.jpg',
+            '观天知冷暖 循气护健康（雨航员版)/9-10雾霾污染.jpg',
+            '观天知冷暖 循气护健康（雨航员版)/11-12光照缺乏.jpg',
+            '观天知冷暖 循气护健康（雨航员版)/打开最后一页.jpg',
+            '观天知冷暖 循气护健康（雨航员版)/封底.jpg'
+        ];
+
+        initBookReader(
+            'openHealthBook',
+            'healthBookModal',
+            'closeHealthBook',
+            'healthBookImage',
+            'healthPrevPage',
+            'healthNextPage',
+            'healthPageNum',
+            healthBookPages
+        );
+        // 1. 问卷弹窗控制
+        const openHealthSurvey = document.getElementById('openHealthSurvey');
+        const healthSurveyModal = document.getElementById('healthSurveyModal');
+        const closeHealthSurvey = document.getElementById('closeHealthSurvey');
+        const healthSurveyForm = document.getElementById('healthSurveyForm');
+    
+        // 打开问卷
+        openHealthSurvey.addEventListener('click', () => {
+            healthSurveyModal.classList.remove('hidden');
+            healthSurveyModal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // 禁止页面滚动
+        });
+    
+        // 关闭问卷
+        closeHealthSurvey.addEventListener('click', () => {
+            healthSurveyModal.classList.add('hidden');
+            healthSurveyModal.classList.remove('flex');
+            document.body.style.overflow = ''; // 恢复页面滚动
+            healthSurveyForm.reset(); // 重置表单
+        });
+    
+        // 点击弹窗外部关闭
+        healthSurveyModal.addEventListener('click', (e) => {
+            if (e.target === healthSurveyModal) {
+                closeHealthSurvey.click();
+            }
+        });
+    
+        // 2. 提交问卷并生成报告
+        healthSurveyForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // 模拟数据提交与报告生成
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 正在生成报告...';
+    
+            // 模拟接口请求（实际项目中替换为真实接口）
+            setTimeout(() => {
+                // 模拟报告生成成功
+                alert('✅ 问卷提交成功！\n平台已基于居民健康信息+当地气象数据生成《气象健康风险评估报告》，包含：\n1. 个性化气象健康风险等级\n2. 针对性防护建议\n3. 极端天气应对方案');
+                
+                // 重置按钮状态并关闭弹窗
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '提交问卷并生成健康风险报告';
+                closeHealthSurvey.click();
+            }, 2000);
+        });
+         // ===================== 2. 问卷文件上传功能 =====================
+        const openFileUpload = document.getElementById('openFileUpload');
+        const fileUploadModal = document.getElementById('fileUploadModal');
+        const closeFileUpload = document.getElementById('closeFileUpload');
+        const fileUploadForm = document.getElementById('fileUploadForm');
+        const fileDropArea = document.getElementById('fileDropArea');
+        const surveyFile = document.getElementById('surveyFile');
+        const selectFileBtn = document.getElementById('selectFileBtn');
+        const filePreview = document.getElementById('filePreview');
+        const fileList = document.getElementById('fileList');
+
+        // 打开上传弹窗
+        openFileUpload.addEventListener('click', () => {
+            fileUploadModal.classList.remove('hidden');
+            fileUploadModal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // 关闭上传弹窗
+        closeFileUpload.addEventListener('click', () => {
+            fileUploadModal.classList.add('hidden');
+            fileUploadModal.classList.remove('flex');
+            document.body.style.overflow = '';
+            fileUploadForm.reset();
+            filePreview.classList.add('hidden');
+            fileList.innerHTML = '';
+        });
+
+        // 点击外部关闭
+        fileUploadModal.addEventListener('click', (e) => {
+            if (e.target === fileUploadModal) closeFileUpload.click();
+        });
+
+        // 选择文件按钮点击
+        selectFileBtn.addEventListener('click', () => {
+            surveyFile.click();
+        });
+
+        // 文件选择后预览
+        surveyFile.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        // 拖拽上传
+        fileDropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileDropArea.classList.add('border-primary');
+            fileDropArea.classList.add('bg-primary/5');
+        });
+
+        fileDropArea.addEventListener('dragleave', () => {
+            fileDropArea.classList.remove('border-primary');
+            fileDropArea.classList.remove('bg-primary/5');
+        });
+
+        fileDropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileDropArea.classList.remove('border-primary');
+            fileDropArea.classList.remove('bg-primary/5');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        // 处理文件预览
+        function handleFiles(files) {
+            if (files.length === 0) return;
+            
+            filePreview.classList.remove('hidden');
+            fileList.innerHTML = '';
+            
+            Array.from(files).forEach((file, index) => {
+                // 验证文件大小（5MB）
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(`文件 ${file.name} 超过5MB限制，请压缩后上传`);
+                    return;
+                }
+
+                // 验证文件格式
+                const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert(`文件 ${file.name} 格式不支持，仅支持JPG/PNG/PDF/Word`);
+                    return;
+                }
+
+                // 添加文件预览项
+                const fileItem = document.createElement('div');
+                fileItem.className = 'flex items-center justify-between p-2 bg-light rounded-lg';
+                fileItem.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <i class="fa fa-file-${file.type.includes('image') ? 'image-o' : file.type.includes('pdf') ? 'pdf-o' : 'word-o'} text-primary"></i>
+                        <div>
+                            <p class="text-sm text-gray-800 truncate max-w-[200px]">${file.name}</p>
+                            <p class="text-xs text-gray-500">${(file.size / 1024).toFixed(1)} KB</p>
+                        </div>
+                    </div>
+                    <button type="button" class="text-gray-500 hover:text-red-500 remove-file" data-index="${index}">
+                        <i class="fa fa-times"></i>
+                    </button>
+                `;
+                fileList.appendChild(fileItem);
+
+                // 删除文件
+                fileItem.querySelector('.remove-file').addEventListener('click', () => {
+                    fileItem.remove();
+                    if (fileList.children.length === 0) {
+                        filePreview.classList.add('hidden');
+                        surveyFile.value = '';
+                    }
+                });
+            });
+        }
+
+        // 提交上传表单
+        fileUploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // 验证是否选择文件
+            if (surveyFile.files.length === 0) {
+                alert('请选择要上传的问卷文件');
+                return;
+            }
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 正在上传并生成报告...';
+
+            // 模拟文件上传（实际项目中替换为FormData上传接口）
+            setTimeout(() => {
+                alert('✅ 问卷文件上传成功！\n平台已接收纸质问卷扫描件，将结合气象数据生成《气象健康风险评估报告》，报告生成后将通过短信通知您。');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '上传文件并生成健康风险报告';
+                closeFileUpload.click();
+            }, 3000);
+        });
+    
+        // 个性化旅游路线定制表单弹窗控制
+        const openTravelForm = document.getElementById('openTravelForm');
+        const travelFormModal = document.getElementById('travelFormModal');
+        const closeTravelForm = document.getElementById('closeTravelForm');
+        const travelCustomForm = document.getElementById('travelCustomForm');
+        
+        // 打开表单
+        openTravelForm.addEventListener('click', () => {
+            travelFormModal.classList.remove('hidden');
+            travelFormModal.classList.add('flex');
+        });
+        
+        // 关闭表单
+        closeTravelForm.addEventListener('click', () => {
+            travelFormModal.classList.add('hidden');
+            travelFormModal.classList.remove('flex');
+            travelCustomForm.reset(); // 重置表单
+        });
+        
+        // 点击弹窗外部关闭
+        travelFormModal.addEventListener('click', (e) => {
+            if (e.target === travelFormModal) {
+                travelFormModal.classList.add('hidden');
+                travelFormModal.classList.remove('flex');
+                travelCustomForm.reset();
+            }
+        });
+        
+        // 表单提交处理
+        travelCustomForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('您的定制需求已提交！我们将结合实时气象为您规划专属路线，稍后会有客服联系您。');
+            travelFormModal.classList.add('hidden');
+            travelFormModal.classList.remove('flex');
+            travelCustomForm.reset();
+        });
+        // ===================== 1. 平台主弹窗控制 =====================
+        const openAgriQAPlatform = document.getElementById('openAgriQAPlatform');
+        const agriQAPlatformModal = document.getElementById('agriQAPlatformModal');
+        const closeAgriQAPlatform = document.getElementById('closeAgriQAPlatform');
+        const qTabs = document.querySelectorAll('.q-tab');
+        const qContents = document.querySelectorAll('.q-content');
+    
+        // 打开平台
+        openAgriQAPlatform.addEventListener('click', () => {
+            agriQAPlatformModal.classList.remove('hidden');
+            agriQAPlatformModal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        });
+    
+        // 关闭平台
+        closeAgriQAPlatform.addEventListener('click', () => {
+            agriQAPlatformModal.classList.add('hidden');
+            agriQAPlatformModal.classList.remove('flex');
+            document.body.style.overflow = '';
+        });
+    
+        // 点击外部关闭
+        agriQAPlatformModal.addEventListener('click', (e) => {
+            if (e.target === agriQAPlatformModal) closeAgriQAPlatform.click();
+        });
+    
+        // 标签切换
+        qTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.dataset.tab;
+                switchTab(tabId);
+            });
+        });
+    
+        // 切换标签函数
+        function switchTab(tabId) {
+            // 移除所有激活状态
+            qTabs.forEach(t => t.classList.remove('active', 'bg-white'));
+            qContents.forEach(c => c.classList.add('hidden'));
+            
+            // 激活当前标签
+            document.querySelector(`.q-tab[data-tab="${tabId}"]`).classList.add('active', 'bg-white');
+            document.getElementById(`${tabId}-tab`).classList.remove('hidden');
+        }
+    
+        // ===================== 2. 发布问题表单 =====================
+        const publishQuestionForm = document.getElementById('publishQuestionForm');
+        publishQuestionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 发布中...';
+    
+            setTimeout(() => {
+                alert('✅ 问题发布成功！\n赏金已冻结，待您确认最佳答案后将发放给回答者。\n其他农户和专家可在问题列表中看到您的问题。');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '发布问题并冻结赏金';
+                publishQuestionForm.reset();
+                switchTab('my-questions');
+            }, 2000);
+        });
+    
+        // ===================== 3. 回答问题弹窗 =====================
+        const answerBtns = document.querySelectorAll('.answer-btn');
+        const answerQuestionModal = document.getElementById('answerQuestionModal');
+        const closeAnswerQuestion = document.getElementById('closeAnswerQuestion');
+        const answerQuestionTitle = document.getElementById('answerQuestionTitle');
+        const answerQuestionForm = document.getElementById('answerQuestionForm');
+    
+        // 打开回答弹窗
+        answerBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const questionId = btn.dataset.questionId;
+                let questionTitle = '';
+                
+                // 根据问题ID获取标题
+                if (questionId === '1') questionTitle = '小麦灌浆期遇到连续阴雨天气该如何应对？';
+                else if (questionId === '2') questionTitle = '大棚番茄遇到高温高湿天气如何防裂果？';
+                else if (questionId === '3') questionTitle = '玉米苗期遭遇倒春寒如何补救？';
+                
+                answerQuestionTitle.textContent = questionTitle;
+                answerQuestionModal.classList.remove('hidden');
+                answerQuestionModal.classList.add('flex');
+            });
+        });
+    
+        // 关闭回答弹窗
+        closeAnswerQuestion.addEventListener('click', () => {
+            answerQuestionModal.classList.add('hidden');
+            answerQuestionModal.classList.remove('flex');
+            answerQuestionForm.reset();
+        });
+    
+        // 点击外部关闭回答弹窗
+        answerQuestionModal.addEventListener('click', (e) => {
+            if (e.target === answerQuestionModal) closeAnswerQuestion.click();
+        });
+    
+        // 提交回答
+        answerQuestionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 提交中...';
+    
+            setTimeout(() => {
+                alert('✅ 回答提交成功！\n发布者将收到您的回答通知，若被选为最佳答案，赏金将自动发放至您的账户。');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '提交回答';
+                answerQuestionForm.reset();
+                closeAnswerQuestion.click();
+                switchTab('my-answers');
+            }, 2000);
+        });
+        </script>
 </body>
 </html>
