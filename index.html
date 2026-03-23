@@ -194,7 +194,7 @@
             <div class="carousel-item active h-full">
                 <img src="images/首页.png" alt="首页" class="absolute inset-0 w-full h-full object-cover">
             </div>
-            <div class="carousel-item h-full">
+            <!-- <div class="carousel-item h-full">
                 <img src="images/1.jpg" alt="雨航员气象方舟" class="absolute inset-0 w-full h-full object-cover">
             </div>
             <div class="carousel-item h-full">
@@ -211,7 +211,7 @@
             </div>
             <div class="carousel-item h-full">
                 <img src="images/6.jpg" alt="气象与自然" class="absolute inset-0 w-full h-full object-cover">
-            </div>
+            </div> -->
         </div>
         <div class="container mx-auto px-4 h-full flex items-center relative z-20">
             <div class="max-w-2xl text-white">
@@ -223,12 +223,12 @@
             </div>
         </div>
         <!-- 轮播控制按钮 -->
-        <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 z-30 text-white text-3xl opacity-70 hover:opacity-100">
+        <!-- <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 z-30 text-white text-3xl opacity-70 hover:opacity-100">
             <i class="fa fa-angle-left"></i>
         </button>
         <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 z-30 text-white text-3xl opacity-70 hover:opacity-100">
             <i class="fa fa-angle-right"></i>
-        </button>
+        </button> -->
     </section>
 
     <!-- 科普舱 -->
@@ -332,7 +332,7 @@
                         <p class="text-gray-600 mb-4">社区工作者线下采集居民气象健康信息，支持在线填写或上传纸质问卷扫描件，平台生成健康风险报告。</p>
                         <div class="flex gap-3">
                             <a href="javascript:void(0)" id="openHealthSurvey" class="flex-1 text-primary font-medium hover:underline flex items-center justify-center gap-2 py-2">
-                                在线填写 <i class="fa fa-pencil ml-1"></i>
+                                生成问卷 <i class="fa fa-pencil ml-1"></i>
                             </a>
                             <a href="javascript:void(0)" id="openFileUpload" class="flex-1 text-primary font-medium hover:underline flex items-center justify-center gap-2 py-2">
                                 上传问卷 <i class="fa fa-upload ml-1"></i>
@@ -1397,32 +1397,32 @@
         });
         
         // 轮播图逻辑
-        const carousel = document.getElementById('carousel');
-        const items = carousel.querySelectorAll('.carousel-item');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        let currentIndex = 0;
+        // const carousel = document.getElementById('carousel');
+        // const items = carousel.querySelectorAll('.carousel-item');
+        // const prevBtn = document.getElementById('prevBtn');
+        // const nextBtn = document.getElementById('nextBtn');
+        // let currentIndex = 0;
         
-        function showItem(index) {
-            items.forEach(item => item.classList.remove('active'));
-            items[index].classList.add('active');
-        }
+        // function showItem(index) {
+        //     items.forEach(item => item.classList.remove('active'));
+        //     items[index].classList.add('active');
+        // }
         
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + items.length) % items.length;
-            showItem(currentIndex);
-        });
+        // prevBtn.addEventListener('click', () => {
+        //     currentIndex = (currentIndex - 1 + items.length) % items.length;
+        //     showItem(currentIndex);
+        // });
         
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % items.length;
-            showItem(currentIndex);
-        });
+        // nextBtn.addEventListener('click', () => {
+        //     currentIndex = (currentIndex + 1) % items.length;
+        //     showItem(currentIndex);
+        // });
         
-        // 自动轮播
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % items.length;
-            showItem(currentIndex);
-        }, 5000);
+        // // 自动轮播
+        // setInterval(() => {
+        //     currentIndex = (currentIndex + 1) % items.length;
+        //     showItem(currentIndex);
+        // }, 5000);
         
         // 滚动时导航栏样式变化
         window.addEventListener('scroll', () => {
